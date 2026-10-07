@@ -125,23 +125,23 @@ sequenceDiagram
     Note over Cinema,Clef: 2. Cinematic Storyboarding & System 1 Gating
     Cinema->>Cinema: Synthesize 3D Higgsfield camera trajectory vectors
     Cinema->>Cinema: Compile cut-on-action scene graph & Foley cues
-    Cinema-->>Clef: Submit headline candidates & storyboard
-    Clef->>Clef: Single-pass non-autoregressive channel evaluation (<50µs)
+    Cinema-->>Clef: Submit headline candidates and storyboard
+    Clef->>Clef: Single-pass non-autoregressive channel evaluation (sub-50us)
     Clef-->>MiroFish: Route optimal Show HN headline to pre-mortem
 
     Note over MiroFish,Actuator: 3. MiroFish Pre-Mortem Simulation Phase
     MiroFish->>MiroFish: Evaluate draft against 5 Epistemic Tribes
-    MiroFish->>MiroFish: Simulate multi-round debate & calculate RVI index
-    alt Flame-War Risk Detected (RVI < 1.20)
-        MiroFish-->>Linter: Flag friction points & request evidence strengthening
-    else Consensus Front-Page Viable (RVI >= 1.20)
+    MiroFish->>MiroFish: Simulate multi-round debate and calculate RVI index
+    alt Flame-War Risk Detected (RVI below 1.20)
+        MiroFish-->>Linter: Flag friction points and request evidence strengthening
+    else Consensus Front-Page Viable (RVI at 1.20 or above)
         MiroFish-->>Actuator: Simulation passed; release for actuation
     end
 
-    Note over Actuator,Community: 4. Public Launch Actuation & Live Triage
+    Note over Actuator,Community: 4. Public Launch Actuation and Live Triage
     Actuator->>Community: Deploy Show HN dossier + Remotion/VideoClaw clips
-    Community-->>Founder: Real-time feedback & questions
-    Note over Founder,Actuator: Laya hot-path triage routes bug reports vs technical inquiries (<30µs)
+    Community-->>Founder: Real-time feedback and questions
+    Note over Founder,Actuator: Laya hot-path triage routes bug reports vs technical inquiries (sub-30us)
 ```
 
 ---
@@ -150,29 +150,29 @@ sequenceDiagram
 
 ### 1. Propositional Information Density (PID) & Slop Index
 Quantifies technical signal vs corporate fluff:
-$$\text{PID} = \frac{|\mathcal{F}_{\text{empirical}}|}{|\mathcal{W}|} \quad \text{where} \quad \mathcal{F}_{\text{empirical}} = \{\text{benchmarks, code tokens, physical units, URLs}\}$$
-The composite Slop Index $S_{\text{slop}} \in [0.0, 1.0]$ bounds marketing noise:
-$$S_{\text{slop}} = 0.50 \cdot \min\left(1, \frac{10 \cdot |\mathcal{V}_{\text{slop}}|}{|\mathcal{W}|}\right) + 0.30 \cdot \max\left(0, \frac{0.30 - \text{PID}}{0.30}\right) + 0.20 \cdot \max\left(0, \frac{6.0 - \sigma_{\text{sentence}}}{6.0}\right)$$
+$$\mathrm{PID} = \frac{|\mathcal{F}_{\mathrm{empirical}}|}{|\mathcal{W}|} \quad \text{where} \quad \mathcal{F}_{\mathrm{empirical}} = \{\text{benchmarks},\, \text{code tokens},\, \text{physical units},\, \text{URLs}\}$$
+The composite Slop Index $S_{\mathrm{slop}} \in [0.0, 1.0]$ bounds marketing noise:
+$$S_{\mathrm{slop}} = 0.50 \cdot \min\left(1, \frac{10 \cdot |\mathcal{V}_{\mathrm{slop}}|}{|\mathcal{W}|}\right) + 0.30 \cdot \max\left(0, \frac{0.30 - \mathrm{PID}}{0.30}\right) + 0.20 \cdot \max\left(0, \frac{6.0 - \sigma_{\mathrm{sentence}}}{6.0}\right)$$
 
 ### 2. Higgsfield 3D Camera Trajectory Matrix
 Defines physical spatial camera vectors and optical parameters over continuous time $t$:
-$$\mathbf{C}(t) = \begin{bmatrix} x(t) & y(t) & z(t) \\ \theta_{\text{pitch}}(t) & \theta_{\text{yaw}}(t) & \theta_{\text{roll}}(t) \\ f_{\text{focal}}(t) & \alpha_{\text{aperture}}(t) & d_{\text{focus}}(t) \end{bmatrix}$$
+$$\mathbf{C}(t) = \begin{bmatrix} x(t) & y(t) & z(t) \\ \theta_{\mathrm{pitch}}(t) & \theta_{\mathrm{yaw}}(t) & \theta_{\mathrm{roll}}(t) \\ f_{\mathrm{focal}}(t) & \alpha_{\mathrm{aperture}}(t) & d_{\mathrm{focus}}(t) \end{bmatrix}$$
 Subject to linear keyframe interpolation avoiding unnatural floaty drift:
 $$\mathbf{C}(t) = \mathbf{C}(t_k) + \frac{t - t_k}{t_{k+1} - t_k} \left(\mathbf{C}(t_{k+1}) - \mathbf{C}(t_k)\right)$$
 
 ### 3. MiroFish Receptivity & Flame-War Vulnerability Index (RVI)
 Measures aggregate weighted tribal resonance against cognitive skepticism across $N$ personas:
-$$\text{RVI} = \frac{\sum_{i=1}^N w_i \cdot R_i}{\max\left(0.01,\, \sum_{i=1}^N w_i \cdot S_i\right)}$$
+$$\mathrm{RVI} = \frac{\sum_{i=1}^N w_i \cdot R_i}{\max\left(0.01,\, \sum_{i=1}^N w_i \cdot S_i\right)}$$
 Flame-war probability across the synthetic developer community:
-$$P_{\text{flame}} = \frac{1}{N} \sum_{i=1}^N \mathbf{1}_{\{S_i > 0.70 \land |\mathcal{T}_{\text{reject}}(i)| \ge 1\}} \cdot (S_i - 0.50) \cdot 1.8$$
+$$P_{\mathrm{flame}} = \frac{1}{N} \sum_{i=1}^N \mathbb{I}\left(S_i > 0.70 \land |\mathcal{T}_{\mathrm{reject}}(i)| \ge 1\right) \cdot (S_i - 0.50) \cdot 1.8$$
 
 ### 4. Multi-Choice Knapsack (MCKP) Attention Allocation
 Allocates simulation compute budget $B$ across epistemic tribes to maximize evaluation fidelity:
-$$\max \sum_{i \in \text{Tribes}} \sum_{j \in \text{Options}} v_{ij} x_{ij} \quad \text{s.t.} \quad \sum_{i} \sum_{j} c_{ij} x_{ij} \le B, \quad \sum_{j} x_{ij} = 1 \quad \forall i$$
+$$\max_{\{x_{ij}\}} \sum_{i \in \mathrm{Tribes}} \sum_{j \in \mathrm{Options}} v_{ij} x_{ij} \quad \text{s.t.} \quad \sum_{i} \sum_{j} c_{ij} x_{ij} \le B, \quad \sum_{j} x_{ij} = 1 \quad \forall i$$
 
 ### 5. Submodular Influence Maximization
 Selects $k$ seed influencer nodes $S$ to trigger viral diffusion with guaranteed $(1 - 1/e) \approx 63.2\%$ approximation bound:
-$$S^* = \arg\max_{|S| \le k} \sigma(S), \quad \sigma(S \cup \{u\}) - \sigma(S) \ge \sigma(T \cup \{u\}) - \sigma(T) \quad \forall S \subseteq T$$
+$$S^* = \operatorname*{arg\,max}_{|S| \le k} \sigma(S), \quad \sigma(S \cup \{u\}) - \sigma(S) \ge \sigma(T \cup \{u\}) - \sigma(T) \quad \forall S \subseteq T$$
 
 ---
 
