@@ -167,29 +167,60 @@ sequenceDiagram
 
 ### 1. Propositional Information Density (PID) & Slop Index
 Quantifies technical signal vs corporate fluff:
-$$\mathrm{PID} = \frac{|\mathcal{F}_{\mathrm{empirical}}|}{|\mathcal{W}|} \quad \text{where} \quad \mathcal{F}_{\mathrm{empirical}} = \{\text{benchmarks},\, \text{code tokens},\, \text{physical units},\, \text{URLs}\}$$
+
+$$
+\mathrm{PID} = \frac{|\mathcal{F}_{\mathrm{empirical}}|}{|\mathcal{W}|} \quad \text{where} \quad \mathcal{F}_{\mathrm{empirical}} = \{\text{benchmarks},\, \text{code tokens},\, \text{physical units},\, \text{URLs}\}
+$$
+
 The composite Slop Index $S_{\mathrm{slop}} \in [0.0, 1.0]$ bounds marketing noise:
-$$S_{\mathrm{slop}} = 0.50 \cdot \min\left(1, \frac{10 \cdot |\mathcal{V}_{\mathrm{slop}}|}{|\mathcal{W}|}\right) + 0.30 \cdot \max\left(0, \frac{0.30 - \mathrm{PID}}{0.30}\right) + 0.20 \cdot \max\left(0, \frac{6.0 - \sigma_{\mathrm{sentence}}}{6.0}\right)$$
+
+$$
+S_{\mathrm{slop}} = 0.50 \cdot \min\left(1,\, \frac{10 \cdot |\mathcal{V}_{\mathrm{slop}}|}{|\mathcal{W}|}\right) + 0.30 \cdot \max\left(0,\, \frac{0.30 - \mathrm{PID}}{0.30}\right) + 0.20 \cdot \max\left(0,\, \frac{6.0 - \sigma_{\mathrm{sentence}}}{6.0}\right)
+$$
 
 ### 2. Higgsfield 3D Camera Trajectory Matrix
 Defines physical spatial camera vectors and optical parameters over continuous time $t$:
-$$\mathbf{C}(t) = \begin{bmatrix} x(t) & y(t) & z(t) \\ \theta_{\mathrm{pitch}}(t) & \theta_{\mathrm{yaw}}(t) & \theta_{\mathrm{roll}}(t) \\ f_{\mathrm{focal}}(t) & \alpha_{\mathrm{aperture}}(t) & d_{\mathrm{focus}}(t) \end{bmatrix}$$
+
+$$
+\mathbf{C}(t) = \begin{bmatrix}
+x(t) & y(t) & z(t) \\
+\theta_{\mathrm{pitch}}(t) & \theta_{\mathrm{yaw}}(t) & \theta_{\mathrm{roll}}(t) \\
+f_{\mathrm{focal}}(t) & \alpha_{\mathrm{aperture}}(t) & d_{\mathrm{focus}}(t)
+\end{bmatrix}
+$$
+
 Subject to linear keyframe interpolation avoiding unnatural floaty drift:
-$$\mathbf{C}(t) = \mathbf{C}(t_k) + \frac{t - t_k}{t_{k+1} - t_k} \left(\mathbf{C}(t_{k+1}) - \mathbf{C}(t_k)\right)$$
+
+$$
+\mathbf{C}(t) = \mathbf{C}(t_k) + \frac{t - t_k}{t_{k+1} - t_k} \left(\mathbf{C}(t_{k+1}) - \mathbf{C}(t_k)\right)
+$$
 
 ### 3. MiroFish Receptivity & Flame-War Vulnerability Index (RVI)
 Measures aggregate weighted tribal resonance against cognitive skepticism across $N$ personas:
-$$\mathrm{RVI} = \frac{\sum_{i=1}^N w_i \cdot R_i}{\max\left(0.01,\, \sum_{i=1}^N w_i \cdot S_i\right)}$$
+
+$$
+\mathrm{RVI} = \frac{\sum_{i=1}^N w_i \cdot R_i}{\max\left(0.01,\, \sum_{i=1}^N w_i \cdot S_i\right)}
+$$
+
 Flame-war probability across the synthetic developer community:
-$$P_{\mathrm{flame}} = \frac{1}{N} \sum_{i=1}^N \mathbb{I}\left(S_i > 0.70 \land |\mathcal{T}_{\mathrm{reject}}(i)| \ge 1\right) \cdot (S_i - 0.50) \cdot 1.8$$
+
+$$
+P_{\mathrm{flame}} = \frac{1}{N} \sum_{i=1}^N \mathbb{I}\left(S_i > 0.70 \land |\mathcal{T}_{\mathrm{reject}}(i)| \ge 1\right) \cdot (S_i - 0.50) \cdot 1.8
+$$
 
 ### 4. Multi-Choice Knapsack (MCKP) Attention Allocation
 Allocates simulation compute budget $B$ across epistemic tribes to maximize evaluation fidelity:
-$$\max_{\{x_{ij}\}} \sum_{i \in \mathrm{Tribes}} \sum_{j \in \mathrm{Options}} v_{ij} x_{ij} \quad \text{s.t.} \quad \sum_{i} \sum_{j} c_{ij} x_{ij} \le B, \quad \sum_{j} x_{ij} = 1 \quad \forall i$$
+
+$$
+\max_{x_{ij}} \sum_{i \in \mathrm{Tribes}} \sum_{j \in \mathrm{Options}} v_{ij} x_{ij} \quad \text{s.t.} \quad \sum_{i} \sum_{j} c_{ij} x_{ij} \le B, \quad \sum_{j} x_{ij} = 1 \quad \forall i
+$$
 
 ### 5. Submodular Influence Maximization
 Selects $k$ seed influencer nodes $S$ to trigger viral diffusion with guaranteed $(1 - 1/e) \approx 63.2\%$ approximation bound:
-$$S^* = \operatorname*{arg\,max}_{|S| \le k} \sigma(S), \quad \sigma(S \cup \{u\}) - \sigma(S) \ge \sigma(T \cup \{u\}) - \sigma(T) \quad \forall S \subseteq T$$
+
+$$
+S^* = \arg \max_{|S| \le k} \sigma(S), \quad \sigma(S \cup \{u\}) - \sigma(S) \ge \sigma(T \cup \{u\}) - \sigma(T) \quad \forall S \subseteq T
+$$
 
 ---
 
