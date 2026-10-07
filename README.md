@@ -152,7 +152,7 @@ sequenceDiagram
     alt Flame-War Risk Detected (RVI below 1.20)
         MiroFish-->>Linter: Flag friction points and request evidence strengthening
     else Consensus Front-Page Viable (RVI at 1.20 or above)
-        MiroFish-->>Actuator: Simulation passed; release for actuation
+        MiroFish-->>Actuator: Simulation passed and released for actuation
     end
 
     Note over Actuator,Community: 4. Public Launch Actuation and Live Triage
