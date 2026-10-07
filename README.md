@@ -8,6 +8,8 @@
 [![Version](https://img.shields.io/badge/version-0.2.0-purple)]()
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)]()
 
+`audience-engineering` • `anti-slop` • `video-generation` • `video-ai` • `discrete-optimization` • `content-automation` • `stylometry` • `synthetic-users` • `mirofish` • `market-simulation` • `developer-marketing` • `cloudflare-workers` • `python` • `zero-dependency`
+
 ---
 
 ## 1. Executive Overview
