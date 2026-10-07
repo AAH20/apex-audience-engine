@@ -2,10 +2,22 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import List, Optional
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional
 
+from apex_audience_engine.cinema.gif_pipeline import (
+    GifPipelineOptions,
+    ScreenshotsToGifPipeline,
+)
+from apex_audience_engine.cinema.hyperframes import (
+    HyperFramesCompiler,
+    HyperFramesOptions,
+)
 from apex_audience_engine.cinema.montage import MontageTimeline
+from apex_audience_engine.cinema.remotion import (
+    RemotionProjectCompiler,
+    RemotionProjectConfig,
+)
 from apex_audience_engine.mirofish.metrics import PreMortemReport
 
 
@@ -36,6 +48,11 @@ class MasterLaunchPackage:
     reddit_post: RedditPost
     montage_timeline: MontageTimeline
     pre_mortem_report: PreMortemReport
+    hyperframes_html: str = ""
+    hyperframes_project_json: dict[str, Any] = field(default_factory=dict)
+    remotion_project_files: dict[str, str] = field(default_factory=dict)
+    screenshots_gif_script: str = ""
+    screenshots_gif_manifest: dict[str, Any] = field(default_factory=dict)
 
 
 class LaunchDossierBuilder:
@@ -99,6 +116,25 @@ Install: `{install_command}`
 
 Would love feedback on the implementation!"""
 
+        # 4. HyperFrames HTML & Project Compilation (Hermes hyperframes skills)
+        hf_opts = HyperFramesOptions(composition_id=project_name.replace("-", "_").title().replace("_", ""))
+        hf_compiler = HyperFramesCompiler(hf_opts)
+        hf_html = hf_compiler.compile_html(timeline)
+        hf_json = hf_compiler.compile_project_json(timeline)
+
+        # 5. Remotion React Project Compilation (Hermes remotion skills)
+        remotion_cfg = RemotionProjectConfig(composition_id=project_name.replace("-", "_").title().replace("_", ""))
+        remotion_compiler = RemotionProjectCompiler(remotion_cfg)
+        remotion_files = remotion_compiler.compile_project(timeline)
+
+        # 6. Screenshots to Animated GIF Automation (Hermes screenshots-to-gif-demo skill)
+        gif_pipeline = ScreenshotsToGifPipeline(GifPipelineOptions(
+            output_gif_path=f"dist/{project_name.lower().replace('-', '_')}_demo.gif",
+            screenshots_dir=f"dist/screenshots_{project_name.lower().replace('-', '_')}",
+        ))
+        gif_script = gif_pipeline.generate_shell_script()
+        gif_manifest = gif_pipeline.generate_manifest_json()
+
         return MasterLaunchPackage(
             project_name=project_name,
             show_hn=ShowHNDossier(title=hn_title, body_markdown=hn_body),
@@ -106,4 +142,9 @@ Would love feedback on the implementation!"""
             reddit_post=RedditPost(subreddit="r/Python", title=reddit_title, body_markdown=reddit_body),
             montage_timeline=timeline,
             pre_mortem_report=pre_mortem,
+            hyperframes_html=hf_html,
+            hyperframes_project_json=hf_json,
+            remotion_project_files=remotion_files,
+            screenshots_gif_script=gif_script,
+            screenshots_gif_manifest=gif_manifest,
         )

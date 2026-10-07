@@ -1,8 +1,9 @@
 """Apex Audience Engine.
 
 Autonomous Sovereign Audience Engineering, Anti-Slop Stylometric De-AI Kernel,
-Higgsfield/Open-Montage Cinematic Director, MiroFish Pre-Mortem Synthetic Swarm,
-and Cloudflare Clef / Laya Hot-Path Decision Router.
+Higgsfield/Open-Montage Cinematic Director, HyperFrames HTML Video Engine,
+Remotion React DSL Compiler, Screenshots to GIF Demonstrator,
+MiroFish Pre-Mortem Synthetic Swarm, and Cloudflare Clef / Laya Hot-Path Decision Router.
 """
 
 from apex_audience_engine.actuation import (
@@ -21,9 +22,18 @@ from apex_audience_engine.antislop import (
 )
 from apex_audience_engine.cinema import (
     CameraDirector,
+    GifCaptureRoute,
+    GifPipelineOptions,
+    HyperFramesCompiler,
+    HyperFramesOptions,
+    HyperFramesTheme,
     MontageShot,
     MontageTimeline,
     OpenMontageCompiler,
+    PurePythonGifGenerator,
+    RemotionProjectCompiler,
+    RemotionProjectConfig,
+    ScreenshotsToGifPipeline,
     VideoManifestExporter,
 )
 from apex_audience_engine.decisions import (
@@ -43,7 +53,7 @@ from apex_audience_engine.mirofish import (
     SyntheticPersona,
 )
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = [
     "AntiSlopEngine",
@@ -56,6 +66,15 @@ __all__ = [
     "MontageShot",
     "OpenMontageCompiler",
     "VideoManifestExporter",
+    "HyperFramesCompiler",
+    "HyperFramesOptions",
+    "HyperFramesTheme",
+    "RemotionProjectCompiler",
+    "RemotionProjectConfig",
+    "ScreenshotsToGifPipeline",
+    "GifPipelineOptions",
+    "GifCaptureRoute",
+    "PurePythonGifGenerator",
     "EpistemicTribe",
     "SyntheticPersona",
     "PersonaFactory",

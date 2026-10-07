@@ -4,8 +4,8 @@ build-backend = "setuptools.backends._legacy:_Backend"
 
 [project]
 name = "apex-audience-engine"
-version = "0.1.0"
-description = "Autonomous Sovereign Audience Engineering, Anti-Slop Stylometric De-AI Kernel, Higgsfield/Open-Montage Cinematic Director, MiroFish Pre-Mortem Synthetic Swarm, and Cloudflare Clef / Laya Hot-Path Decision Router"
+version = "0.2.0"
+description = "Autonomous Sovereign Audience Engineering, Anti-Slop Stylometric De-AI Kernel, Higgsfield/Open-Montage Cinematic Director, HyperFrames HTML Video Engine, Remotion React DSL Compiler, Screenshots to GIF Demonstrator, MiroFish Pre-Mortem Synthetic Swarm, and Cloudflare Clef / Laya Hot-Path Decision Router"
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.10"

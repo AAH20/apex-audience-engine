@@ -1,6 +1,6 @@
 """Microsecond Benchmark Telemetry Suite for Apex Audience Engine.
 
-Measures p50, p99, and ops/sec for all 10 core subsystems on pure Python standard library.
+Measures p50, p99, and ops/sec for all core subsystems on pure Python standard library.
 """
 
 from __future__ import annotations
@@ -13,7 +13,10 @@ from apex_audience_engine.antislop.entropy import EntropyCalculator
 from apex_audience_engine.antislop.heuristics import SlopHeuristicsEngine
 from apex_audience_engine.antislop.linter import AntiSlopEngine
 from apex_audience_engine.cinema.camera import CameraDirector, CameraMotionPreset
+from apex_audience_engine.cinema.gif_pipeline import ScreenshotsToGifPipeline
+from apex_audience_engine.cinema.hyperframes import HyperFramesCompiler
 from apex_audience_engine.cinema.montage import OpenMontageCompiler
+from apex_audience_engine.cinema.remotion import RemotionProjectCompiler
 from apex_audience_engine.decisions.clef import CloudflareClefEngine
 from apex_audience_engine.decisions.laya import LayaLocalRouter
 from apex_audience_engine.mesh.np_hard_bridge import NPHardSwarmOptimizer, SwarmAllocationItem
@@ -33,12 +36,19 @@ class BenchmarkHarness:
         self.clef = CloudflareClefEngine()
         self.laya = LayaLocalRouter()
         self.pipeline = ApexAudiencePipeline()
+        self.hyperframes = HyperFramesCompiler()
+        self.remotion = RemotionProjectCompiler()
+        self.gif_pipeline = ScreenshotsToGifPipeline()
 
     def run_all(self) -> dict[str, dict[str, float]]:
         sample_ai_text = (
             "AI-assisted coding stands as a testament to the transformative power of modern tech. "
             "In today's rapidly evolving landscape, this groundbreaking tool features great UI, "
             "underscoring its pivotal role. Let's dive in! What makes an API good? It comes down to speed."
+        )
+
+        timeline = OpenMontageCompiler.build_technical_launch_montage(
+            "Apex", "Problem", "100us", "Arch", "pip install"
         )
 
         results: dict[str, dict[str, float]] = {}
@@ -95,7 +105,22 @@ class BenchmarkHarness:
             lambda: NPHardSwarmOptimizer.solve_mckp_attention_budget(tribe_options, 600)
         )
 
-        # 10. End-to-End Master Launch Pipeline
+        # 10. HyperFrames HTML & JSON Compiler (Hermes skill)
+        results["10. HyperFrames HTML & JSON Comp"] = self._time_fn(
+            lambda: self.hyperframes.compile_html(timeline)
+        )
+
+        # 11. Remotion React Project Compiler (Hermes skill)
+        results["11. Remotion React Project Comp"] = self._time_fn(
+            lambda: self.remotion.compile_project(timeline)
+        )
+
+        # 12. Screenshots to GIF Script Gen (Hermes skill)
+        results["12. Screenshots to GIF Script Gen"] = self._time_fn(
+            lambda: self.gif_pipeline.generate_shell_script()
+        )
+
+        # 13. End-to-End Master Launch Pipeline
         spec = LaunchSpec(
             project_name="Apex-Kernel",
             tagline="Deterministic Solver",
@@ -106,7 +131,7 @@ class BenchmarkHarness:
             install_command="pip install apex-kernel",
             repo_url="https://github.com/AAH20/apex-kernel",
         )
-        results["10. Master Pipeline End-to-End"] = self._time_fn(
+        results["13. Master Pipeline End-to-End"] = self._time_fn(
             lambda: self.pipeline.run(spec)
         )
 
